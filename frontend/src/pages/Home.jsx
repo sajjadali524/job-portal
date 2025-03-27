@@ -1,7 +1,7 @@
 import React from "react";
 import back_image from "../assets/background/background-1.jpg";
-import { IoSearch } from "react-icons/io5";
 import JobCard from "../components/JobCard";
+import HomeHeroSearchAndCategory from "../components/HomeHeroSearchAndCategory";
 
 const Home = () => {
   return (
@@ -18,41 +18,33 @@ const Home = () => {
           style={{ backgroundColor: "rgba(0,0,0,0.6)" }}
         ></div>
 
-        <div className="relative z-10 text-center text-white space-y-2">
-          <h1 className="font-semibold lg:text-[40px] md:text-[35px] text-[20px]">
+        <div className="relative flex flex-col items-center justify-center z-10 text-center text-white space-y-2 w-full">
+          <h1 className="font-semibold lg:text-[40px] md:text-[35px] text-[25px]">
             <span className="text-green-500">2,568</span> job available
           </h1>
-          <h1 className="font-semibold lg:text-[40px] md:text-[35px] text-[20px]">
+          <h1 className="font-semibold lg:text-[40px] md:text-[35px] text-[23px]">
             You can choose your dream job
           </h1>
-          <p className="lg:text-[14px] md:text-[12px] text-[10px] font-medium">
+          <p className="lg:text-[14px] md:text-[12px] text-[11px] font-medium">
             Find great job for build your bright career. Have many job in this
             platform.
           </p>
 
-          <div className="relative z-10 flex items-center bg-white rounded-full shadow-lg mt-7">
-            <input
-              type="text"
-              placeholder="Find your job"
-              className="outline-none px-4 py-2 w-full text-black rounded-l-full"
-            />
-            <button className="bg-green-500 p-3 cursor-pointer rounded-r-full">
-              <IoSearch />
-            </button>
-          </div>
+          <HomeHeroSearchAndCategory />
+
         </div>
       </div>
 
       <div className="lg:px-20 md:px-10 px-3 pt-10 w-full">
         <div className="flex flex-colietms-center justify-center">
           <div className="flex flex-col items-center justify-center gap-2">
-            <h1 className="font-semibold text-[30px] text-center text-purple-500">
-              Recent Jobs Opening
+            <h1 className="font-semibold text-[25px] text-center opacity-90">
+              RECENT JOB OPENINGS
             </h1>
-            <div className="w-24 h-1 bg-green-500 rounded-md"></div>
+            <div className="w-24 h-1 bg-purple-500 rounded-md"></div>
           </div>
         </div>
-        <div className="grid grid-cols-3 gap-5 items-center justify-items-center pt-10">
+        <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5 items-center justify-items-center pt-10">
           <JobCard />
           <JobCard />
           <JobCard />
