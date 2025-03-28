@@ -6,6 +6,7 @@ import Signup from "./pages/auth/Signup";
 import Header from "./components/Header/Header";
 import Jobs from "./pages/Jobs";
 import Browse from "./pages/Browse";
+import UserProfile from "./pages/UserProfile";
 import Footer from "./components/Footer/Footer";
 
 const App = () => {
@@ -17,6 +18,7 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/jobs" element={<Jobs />} />
           <Route path="/browse" element={<Browse />} />
+          <Route path="/view-profile" element={<UserProfile />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
         </Routes>
