@@ -32,7 +32,7 @@ export const loginAccount = async (req, res) => {
     const { email, password, role } = req.body;
     try {
         if(!email || !password || !role){
-            return res.status(400).josn({message: "All field are required!"});
+            return res.status(400).json({message: "All field are required!"});
         };
 
         const user = await User.findOne({ email });
@@ -42,7 +42,7 @@ export const loginAccount = async (req, res) => {
 
         const isPasswordMatch = await bcrypt.compare(password, user.password);
         if(!isPasswordMatch) {
-            return res.status(400).josn({message: "Incorrect email or password!"});
+            return res.status(400).json({message: "Incorrect email or password!"});
         }
 
         if(role !== user.role) {
@@ -53,6 +53,7 @@ export const loginAccount = async (req, res) => {
         return res.status(200).cookie("token", token, { maxAge: 1 * 24 * 60 * 60 * 1000, httpsOnly: true, sameSite: 'strict' }).json({
             message: `Welcome back ${user.fullName}`,
             user,
+            token
         });
     } catch (error) {
         return res.status(500).json({message: "Internal server error", error});

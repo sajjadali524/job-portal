@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { setLoading } from '../../store/slices/authSlice';
+import axios from "axios";
+import { USER_API_END_POINT } from '../../utils/constant';
+import { toast } from "react-toastify";
+import Loader from '../../components/Loader';
 
 const Signup = () => {
   const [inputData, setInputData] = useState({
@@ -10,13 +16,29 @@ const Signup = () => {
     role: ""
   });
 
+  const dispatch = useDispatch();
+  const {loading} = useSelector(store => store.auth);
+  const navigate = useNavigate();
+
   const handleInput = (e) => {
     setInputData({...inputData, [e.target.name]: e.target.value})
   };
 
-  const registerAccount = (e) => {
+  const registerAccount = async (e) => {
     e.preventDefault();
-    console.log(inputData)
+    
+    try {
+      dispatch(setLoading(true))
+      const response = await axios.post(`${USER_API_END_POINT}/register`, inputData, {withCredentials: true});
+      navigate("/login");
+      toast.success(response.data.message)
+
+    } catch (error) {
+      console.log(error)
+      toast.error(error.response.data.message);
+    } finally {
+      dispatch(setLoading(false))
+    }
   };
 
   return (
@@ -43,7 +65,7 @@ const Signup = () => {
           </div>
 
           <p className="text-right">Already have an account? <Link to="/login" className="text-purple-950">Login</Link></p>
-          <button className="rounded-sm bg-gray-100 py-1 cursor-pointer hover:bg-purple-800 hover:text-white transition-all">Register Account</button>
+          <button className="rounded-sm bg-gray-100 py-1 cursor-pointer hover:bg-purple-800 hover:text-white transition-all">{loading ? <Loader /> : "Register Account"}</button>
         </div>
       </form>
     </div>

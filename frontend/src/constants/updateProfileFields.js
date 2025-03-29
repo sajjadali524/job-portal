@@ -4,12 +4,12 @@ export const profileFields = [
         name: "fullName",
     },
     {
-        title: "Email",
-        name: "email",
-    },
-    {
         title: "Number",
         name: "phoneNumber",
+    },
+    {
+        title: "Email",
+        name: "email",
     },
     {
         title: "Bio",
@@ -23,4 +23,4 @@ export const profileFields = [
         title: "Resume",
         name: "resume",
     },
-]
+];

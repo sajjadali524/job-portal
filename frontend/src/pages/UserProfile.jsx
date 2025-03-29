@@ -6,9 +6,12 @@ import { BsTelephone } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import AppliedJobs from "../components/AppliedJobs";
 import UpdateProfile from "../components/updateProfile";
+import { useSelector } from "react-redux";
 
 const UserProfile = () => {
   const [isFormOpen, setIsFormOpen] = useState(false);
+  const {user} = useSelector(store => store.auth);
+
   return (
     <>
       {isFormOpen && (
@@ -29,37 +32,31 @@ const UserProfile = () => {
             <div className="flex items-center gap-5 py-2">
               <img src={google} alt="logo" className="w-10 h-10" />
               <div className="opacity-90">
-                <h1 className="font-medium">Sajjad Ali</h1>
-                <p className="font-normal text-[15px]">
-                  Experienced software developer
-                </p>
+                <h1 className="font-medium">{user?.fullName}</h1>
+                <p className="font-normal text-[15px]">{user?.profile?.bio?.length > 0 ? user.profile.bio : "bio"}</p>
               </div>
             </div>
 
             <div className="flex items-center gap-3">
               <AiOutlineMail />
-              <p className="opacity-80 text-[15px]">
-                engr.sajjadali2001@gmail.com
-              </p>
+              <p className="opacity-80 text-[15px]">{user?.email}</p>
             </div>
 
             <div className="flex items-center gap-3">
               <BsTelephone />
-              <p className="opacity-80 text-[15px]">+92348#####</p>
+              <p className="opacity-80 text-[15px]">{user?.phoneNumber}</p>
             </div>
 
             <div className="space-y-2">
               <p className="font-semibold">Skills</p>
               <div className="flex items-center gap-2">
-                <p className="opacity-80 text-[11px] bg-black rounded-full px-2 py-1 text-white">
-                  NodeJs
-                </p>
-                <p className="opacity-80 text-[11px] bg-black rounded-full px-2 py-1 text-white">
-                  ExpressJs
-                </p>
-                <p className="opacity-80 text-[11px] bg-black rounded-full px-2 py-1 text-white">
-                  HTML
-                </p>
+                {
+                  user?.profile?.skills?.length > 0 ? user.profile.skills.map((skill, index) => {
+                    return(
+                      <p className="opacity-90 text-[14px] text-center bg-black rounded-full px-3 py-1 text-white" key={index}>{skill}</p>
+                    )
+                  }) : <p className="text-[14px]">No skills found</p>
+                }
               </div>
             </div>
 
