@@ -2,21 +2,19 @@ import React from "react";
 import back_image from "../assets/background/background-1.jpg";
 import JobCard from "../components/JobCard";
 import HomeHeroSearchAndCategory from "../components/HomeHeroSearchAndCategory";
+import { useSelector } from "react-redux";
 
 const Home = () => {
+  const { allJobs } = useSelector(store => store.job);
+
   return (
     <>
-      <div
-        className="relative w-full bg-cover bg-center flex flex-col items-center justify-center lg:px-28 md:px-20 px-3"
+      <div className="relative w-full bg-cover bg-center flex flex-col items-center justify-center lg:px-28 md:px-20 px-3"
         style={{
           backgroundImage: `url(${back_image})`,
-          height: "calc(100vh - 56px)",
-        }}
-      >
-        <div
-          className="absolute inset-0"
-          style={{ backgroundColor: "rgba(0,0,0,0.6)" }}
-        ></div>
+          height: "calc(100vh - 56px)",}}>
+
+        <div className="absolute inset-0" style={{ backgroundColor: "rgba(0,0,0,0.6)" }}></div>
 
         <div className="relative flex flex-col items-center justify-center z-10 text-center text-white space-y-2 w-full">
           <h1 className="font-semibold lg:text-[40px] md:text-[35px] text-[25px]">
@@ -45,12 +43,9 @@ const Home = () => {
           </div>
         </div>
         <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5 items-center justify-items-center pt-10">
-          <JobCard />
-          <JobCard />
-          <JobCard />
-          <JobCard />
-          <JobCard />
-          <JobCard />
+          {
+            allJobs?.length <= 0 ? <p>No jobs available</p> : allJobs?.slice(0, 6).map((job) => <JobCard key={job._id} job={job} />)
+          }
         </div>
       </div>
     </>

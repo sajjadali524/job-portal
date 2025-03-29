@@ -4,13 +4,14 @@ import { profileFields } from "../constants/updateProfileFields";
 import { USER_API_END_POINT } from "../utils/constant";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { setUser } from "../store/slices/authSlice";
+import { setLoading, setUser } from "../store/slices/authSlice";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import Loader from "./Loader";
 
 const UpdateProfile = ({setIsFormOpen}) => {
   const dispatch = useDispatch();
-  const {user} = useSelector(store => store.auth);
+  const {user, loading} = useSelector(store => store.auth);
   const navigate = useNavigate();
 
   const [inputData, setInputData] = useState({
@@ -40,6 +41,7 @@ const UpdateProfile = ({setIsFormOpen}) => {
   const updateProfile = async (e) => {
     e.preventDefault();
     try {
+      dispatch(setLoading(true))
       const response = await axios.put(`${USER_API_END_POINT}/profile/update/${user._id}`, inputData, {withCredentials: true});
 
       dispatch(setUser(response.data.user));
@@ -50,6 +52,8 @@ const UpdateProfile = ({setIsFormOpen}) => {
     } catch (error) {
       console.log(error)
       toast.error(error.response.data.message)
+    } finally {
+      dispatch(setLoading(false))
     }
   };
 
@@ -79,7 +83,7 @@ const UpdateProfile = ({setIsFormOpen}) => {
           })}
 
           <div className="flex items-center justify-end">
-            <button className="bg-black px-3 py-1 rounded-md text-white opacity-50 cursor-pointer hover:opacity-70">Update</button>
+            <button className="bg-black px-3 py-1 rounded-md text-white opacity-50 cursor-pointer hover:opacity-70">{loading ? <Loader /> : "Update"}</button>
           </div>
         </form>
       </div>
