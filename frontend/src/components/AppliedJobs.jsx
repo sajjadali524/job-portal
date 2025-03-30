@@ -1,27 +1,10 @@
 import React from "react";
+import { useSelector } from "react-redux";
 
 const AppliedJobs = () => {
   const tableHead = ["Date", "Job Role", "Company", "Status"];
-  const tableData = [
-    {
-      date: "2024-03-28",
-      role: "Software Engineer",
-      company: "Google",
-      status: "Pending",
-    },
-    {
-      date: "2024-03-27",
-      role: "Frontend Developer",
-      company: "Meta",
-      status: "Accepted",
-    },
-    {
-      date: "2024-03-26",
-      role: "Backend Developer",
-      company: "Amazon",
-      status: "Rejected",
-    },
-  ];
+  const {allAppliedJobs} = useSelector(store => store.job);
+
   return (
     <div className="overflow-x-auto">
       <table
@@ -42,27 +25,27 @@ const AppliedJobs = () => {
         </thead>
 
         <tbody>
-          {tableData.map((item, index) => {
+          {allAppliedJobs?.map((job, index) => {
             return (
               <tr
                 key={index}
                 className={`${
-                  index === tableData.length - 1
+                  index === allAppliedJobs?.length - 1
                     ? ""
                     : "border-b border-slate-200"
                 }`}
               >
-                <td className="px-3 py-2 opacity-80 text-[15px]">
-                  {item.date}
+                <td className="px-3 py-2 opacity-70 text-[15px]">
+                  {job?.createdAt?.split("T")[0]}
                 </td>
-                <td className="px-3 py-2 opacity-80 text-[15px]">
-                  {item.role}
+                <td className="px-3 py-2 opacity-70 text-[15px]">
+                  {job?.job?.title}
                 </td>
-                <td className="px-3 py-2 opacity-80 text-[15px]">
-                  {item.company}
+                <td className="px-3 py-2 opacity-70 text-[15px]">
+                  {job?.job?.company?.name}
                 </td>
-                <td className="px-3 py-2 opacity-80 text-[15px]">
-                  {item.status}
+                <td className={`px-3 opacity-80 text-[15px] font-medium ${job.status === "Accepted" ? "text-green-500" : job.status === "Pending" ? "text-yellow-500" : "text-red-500"}`}>
+                  {job?.status}
                 </td>
               </tr>
             );
