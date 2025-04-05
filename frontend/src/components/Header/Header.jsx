@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { NavLink, Link, useNavigate } from "react-router-dom";
 import { navbar } from "./Navbar";
 import { FaBarsStaggered } from "react-icons/fa6";
-import google from "../../assets/google.png";
 import { CgProfile } from "react-icons/cg";
 import { TbLogout } from "react-icons/tb";
 import { useDispatch, useSelector } from "react-redux";
@@ -41,17 +40,27 @@ const Header = () => {
         </div>
 
         <div className="flex items-center space-x-10">
-          {navbar.map((item, index) => {
-            return user && item.title === "Login" ? (
-              (
-                <img src={google} alt="logo" className="w-5 h-5 cursor-pointer" key={index} onClick={() => setIsClick(!isClick)} />
-              ) || item.path === ""
+            {user?.role === "recruiter" ? (
+            <>
+              <NavLink to="/recruiter/companies" className="text-gray-900 font-semibold" activeclassname="active">Companies</NavLink>
+              <NavLink to="/recruiter/jobs" className="text-gray-900 font-semibold" activeclassname="active">Jobs</NavLink>
+              <img src={user?.profile?.profilePhoto} alt="profile" className="w-7 h-7 rounded-full cursor-pointer" onClick={() => setIsClick(!isClick)} />
+            </>
             ) : (
-              <NavLink to={item.path} key={index} className="text-gray-900 font-semibold" activeclassname="active" >
+            navbar.map((item, index) => {
+              if (user && item.title === "Login") {
+              return (
+                <img key={index} src={user?.profile?.profilePhoto} alt="profile" className="w-7 h-7 rounded-full cursor-pointer" onClick={() => setIsClick(!isClick)} />
+              )
+            }
+
+            return (
+              <NavLink key={index} to={item.path} className="text-gray-900 font-semibold" activeclassname="active">
                 {item.title}
               </NavLink>
-            );
-          })}
+            )
+          })
+        )}
         </div>
       </div>
 
@@ -61,7 +70,7 @@ const Header = () => {
         onClick={() => setIsClick(false)}>
 
         <div className="flex items-center gap-5 py-2 border-b border-slate-200 px-5">
-          <img src={google} alt="logo" className="w-7 h-7 cursor-pointer" />
+          <img src={user?.profile?.profilePhoto} alt="profile" className="w-7 h-7 rounded-full cursor-pointer" />
           <div className="opacity-80">
             <h1 className="font-medium text-[13px]">{user?.fullName || "Guest"}</h1>
           </div>
@@ -86,7 +95,7 @@ const Header = () => {
           <Link to="/" className="font-semibold">JOB<span className="text-purple-500"> HUB</span></Link>
           <div className="flex items-center space-x-5">
             {user && (
-              <img src={google} alt="logo" className="w-4 h-4 cursor-pointer" onClick={() => setIsClick(!isClick)} />
+              <img src={user?.profile?.profilePhoto} alt="profile" className="w-5 h-5 rounded-full cursor-pointer" onClick={() => setIsClick(!isClick)} />
             )}
             <FaBarsStaggered className="text-purple-500" onClick={() => setMenu(!menu)} />
           </div>
@@ -97,13 +106,28 @@ const Header = () => {
             menu ? "translate-x-0" : "-translate-x-full"
           }`}
         >
-          {navbar.map((item, index) => {
-            return user && item.title === "Login" ? ( "") : (
-              <NavLink onClick={() => setMenu(false)} to={item.path} key={index} className="text-gray-900 font-semibold" activeclassname="active">
+          <div className="flex flex-col lg:space-x-10 space-y-5">
+            {user?.role === "recruiter" ?
+            <>
+              <NavLink to="/recruiter/companies" className="text-gray-900 font-semibold" activeclassname="active">Companies</NavLink>
+              <NavLink to="/recruiter/jobs" className="text-gray-900 font-semibold" activeclassname="active">Jobs</NavLink>
+            </>
+            :
+            navbar.map((item, index) => {
+              if (user && item.title === "Login") {
+              return (
+                <img key={index} src={user?.profile?.profilePhoto} alt="profile" className="w-7 h-7 rounded-full cursor-pointer" onClick={() => setIsClick(!isClick)} />
+              );
+            };
+
+            return (
+              <NavLink key={index} to={item.path} className="text-gray-900 font-semibold" activeclassname="active">
                 {item.title}
               </NavLink>
-            );
-          })}
+            )
+          }
+        )}
+        </div>
         </div>
       </div>
     </>

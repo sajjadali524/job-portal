@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import google from "../assets/google.png";
 import { LiaEdit } from "react-icons/lia";
 import { AiOutlineMail } from "react-icons/ai";
 import { BsTelephone } from "react-icons/bs";
@@ -30,7 +29,7 @@ const UserProfile = () => {
             </div>
 
             <div className="flex items-center gap-5 py-2">
-              <img src={google} alt="logo" className="w-10 h-10" />
+              <img src={user?.profile?.profilePhoto} alt="profile" className="w-10 h-10 rounded-full" />
               <div className="opacity-90">
                 <h1 className="font-medium">{user?.fullName}</h1>
                 <p className="font-normal text-[15px]">{user?.profile?.bio?.length > 0 ? user.profile.bio : "bio"}</p>
@@ -62,9 +61,9 @@ const UserProfile = () => {
 
             <div className="space-y-2">
               <p className="font-semibold">Resume</p>
-              <Link className="text-blue-600 hover:text-black">
-                Sajjad-Ali.Resume.pdf
-              </Link>
+              {
+                        user?.profile?.resume ? <a target='blank' href={user?.profile?.resume} className='text-blue-500 w-full hover:underline cursor-pointer'>{user?.profile?.resumeOriginalName}</a> : <span>NA</span>
+                    }
             </div>
           </div>
           <div className="w-full pt-10 space-y-3">

@@ -30,7 +30,11 @@ const Login = () => {
       const response = await axios.post(`${USER_API_END_POINT}/login`, inputData, {withCredentials: true});
 
       dispatch(setUser(response.data.user))
-      navigate("/")
+      if(response.data.role === "student") {
+        navigate("/")
+      } else {
+        navigate("/recruiter/companies")
+      }
       toast.success(response.data.message)
 
     } catch (error) {

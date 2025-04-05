@@ -25,7 +25,7 @@ const AppliedJobs = () => {
         </thead>
 
         <tbody>
-          {allAppliedJobs?.map((job, index) => {
+          {allAppliedJobs ? allAppliedJobs.map((job, index) => {
             return (
               <tr
                 key={index}
@@ -49,7 +49,7 @@ const AppliedJobs = () => {
                 </td>
               </tr>
             );
-          })}
+          }) : <p>Job not applied yet.</p>}
         </tbody>
       </table>
     </div>

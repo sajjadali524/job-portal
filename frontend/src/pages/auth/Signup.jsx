@@ -13,6 +13,7 @@ const Signup = () => {
     phoneNumber: "",
     email: "",
     password: "",
+    profilePhoto: "",
     role: ""
   });
 
@@ -24,12 +25,27 @@ const Signup = () => {
     setInputData({...inputData, [e.target.name]: e.target.value})
   };
 
+  const handleFile = (e) => {
+    setInputData({...inputData, profilePhoto: e.target.files?.[0]})
+  };
+
   const registerAccount = async (e) => {
     e.preventDefault();
+    const formData = new FormData();
+    Object.keys(inputData).forEach((key) => {
+      formData.append(key, inputData[key])
+    });
+
+    console.log(formData)
     
     try {
       dispatch(setLoading(true))
-      const response = await axios.post(`${USER_API_END_POINT}/register`, inputData, {withCredentials: true});
+      const response = await axios.post(`${USER_API_END_POINT}/register`, formData, {
+        withCredentials: true,
+        headers: {
+          "Content-Type": "multipart/form-data"
+        }
+      });
       navigate("/login");
       toast.success(response.data.message)
 
@@ -51,6 +67,7 @@ const Signup = () => {
           <input type="text" name="phoneNumber" placeholder="Phone Number" onChange={handleInput} className="outline-none bg-gray-100 border border-slate-200 px-3 py-1 rounded-sm" />
           <input type="email" name="email" placeholder="Email" onChange={handleInput} className="outline-none bg-gray-100 border border-slate-200 px-3 py-1 rounded-sm" />
           <input type="password" name="password" placeholder="Password" onChange={handleInput} className="outline-none bg-gray-100 border border-slate-200 px-3 py-1 rounded-sm" />
+          <input type="file" name="profilePhoto" accept="image/*" onChange={handleFile} className="outline-none bg-gray-100 border border-slate-200 px-3 py-1 rounded-sm cursor-pointer" />
 
           <div className="bg-gray-100 border border-slate-200 py-1 flex items-center justify-center gap-16 rounded-sm">
             <div className="flex items-center gap-2">

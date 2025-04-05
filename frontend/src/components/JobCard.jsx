@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import google from "../assets/google.png";
 
 const JobCard = ({job}) => {
+  useEffect(() => {
+    console.log(job)
+  });
+  
   return (
     <div className="w-full p-5 shadow-lg space-y-3 rounded-md border border-slate-100 h-fit">
       <div className="flex items-center gap-5">

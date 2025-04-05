@@ -19,7 +19,8 @@ const UpdateProfile = ({setIsFormOpen}) => {
     phoneNumber: "",
     email: "",
     bio: "",
-    skills: ""
+    skills: "",
+    resume: ""
   });
 
   useEffect(() => {
@@ -38,11 +39,25 @@ const UpdateProfile = ({setIsFormOpen}) => {
     setInputData({...inputData, [e.target.name]: e.target.value})
   };
 
+  const handleFile = (e) => {
+    setInputData({...inputData, resume: e.target.files?.[0]})
+  };
+
   const updateProfile = async (e) => {
     e.preventDefault();
+    const formData = new FormData();
+    Object.keys(inputData).forEach((key) => {
+      formData.append(key, inputData[key])
+    });
+
     try {
       dispatch(setLoading(true))
-      const response = await axios.put(`${USER_API_END_POINT}/profile/update/${user._id}`, inputData, {withCredentials: true});
+      const response = await axios.put(`${USER_API_END_POINT}/profile/update/${user._id}`, formData, {
+        withCredentials: true,
+        headers: {
+          "Content-Type": "multipart/form-data"
+        }
+      });
 
       dispatch(setUser(response.data.user));
       setIsFormOpen(false)
@@ -74,9 +89,9 @@ const UpdateProfile = ({setIsFormOpen}) => {
                 <input
                   type={`${fields.name === "resume" ? "file" : fields.name === "email" ? "email" : "text"}`}
                   className="outline-none border border-slate-300 rounded-sm px-3 py-1"
-                  value={inputData[fields.name] || ""}
+                  {...(fields.name !== "resume" && { value: inputData[fields.name] || "" })}
                   name={fields.name}
-                  onChange={handleInput}
+                  onChange={fields.name === "resume" ? handleFile : handleInput}
                 />
               </div>
             );
