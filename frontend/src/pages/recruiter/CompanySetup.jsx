@@ -51,7 +51,6 @@ const CompanySetup = () => {
   };
 
   useEffect(() => {
-    console.log(singleCompany)
     if(singleCompany) {
       setInputData({
         name: singleCompany.name || "",

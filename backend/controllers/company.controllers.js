@@ -5,18 +5,18 @@ import cloudinary from "../config/cloudinaryconfig.js";
 // register company
 export const registerCompany = async (req, res) => {
     const { companyName } = req.body;
-
+    
     try {
         if(!companyName) {
-            return res.status(400).json({message: "CompanyName is required!"})
+            return res.status(400).json({message: "Company Name is required!"})
         };
 
-        let company = await Company.findOne({ name: companyName });
+        let company = await Company.findOne({ companyName });
         if(company) {
             return res.status(400).json({message: "Company already exist!"})
         };
 
-        company = await Company.create({ name: companyName, userId: req.user._id});
+        company = await Company.create({ companyName, userId: req.user._id});
         return res.status(200).json({message: "Company registred successfully!", sucess: true, company})
 
     } catch (error) {
@@ -28,16 +28,16 @@ export const registerCompany = async (req, res) => {
 // fetch all companies
 export const getCompany = async (req, res) => {
     const userId = req.user._id;
-    
+
     try {
-        const companies = await Company.find({ userId })
-        if(!companies) {
-            return res.status(400).json({message: "No companies found!"})
-        }
-        
-        return res.status(200).json({message: "Companies fetch", companies})
+        const companies = await Company.find({ userId });
+
+        return res.status(200).json({
+            message: "Companies fetched successfully",
+            companies: companies || [], // always return array
+        });
     } catch (error) {
-        return res.status(500).json({message: "Internal server error"})
+        return res.status(500).json({ message: "Internal server error" });
     }
 };
 

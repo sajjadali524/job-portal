@@ -65,13 +65,17 @@ export const getJobById = async(req, res) => {
 export const getRecruiterJobs = async(req, res) => {
     const adminId = req.user._id;
     try {
-        const jobs = await Job.find({created_by: adminId});
+        const jobs = await Job.find({created_by: adminId}).populate({
+            path: "company"
+        }).sort({createdAt: -1});
+        
         if(!jobs) {
             return res.status(400).json({message: "Job not found!"})
         };
 
         return res.status(200).json({message: "Job fetch successfully!", jobs})
     } catch (error) {
+        console.log(error)
         return res.status(500).json({message: "Internal server error"})
     }
 };

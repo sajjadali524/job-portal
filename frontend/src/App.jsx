@@ -13,6 +13,7 @@ import Job from "./pages/recruiter/Job";
 import { useSelector } from "react-redux";
 import CreateCompany from "./pages/recruiter/CreateCompany";
 import CompanySetup from "./pages/recruiter/CompanySetup";
+import CreateJob from "./pages/recruiter/CreateJob";
 
 const App = () => {
   const { user } = useSelector(store => store.auth);
@@ -21,18 +22,29 @@ const App = () => {
       <BrowserRouter>
         <Header />
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/jobs" element={<Jobs />} />
-          <Route path="/browse" element={<Browse />} />
-          <Route path="/view-profile" element={<UserProfile />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
+          
 
 
-          <Route path="/recruiter/companies" element={<Companies />} />
-          <Route path="/recruiter/jobs" element={<Job />} />
-          <Route path="/recruiter/companies/create" element={<CreateCompany />} />
-          <Route path="/recruiter/companies/:id" element={<CompanySetup />} />
+          {
+            user?.role === "recruiter" ?
+            <>
+              <Route path="/recruiter/companies" element={<Companies />} />
+              <Route path="/recruiter/companies/create" element={<CreateCompany />} />
+              <Route path="/recruiter/companies/:id" element={<CompanySetup />} />
+              <Route path="/recruiter/jobs" element={<Job />} />
+              <Route path="/recruiter/jobs/create" element={<CreateJob />} />
+              <Route path="/*" element={<Companies />} />
+            </> :
+            <>
+              <Route path="/" element={<Home />} />
+              <Route path="/jobs" element={<Jobs />} />
+              <Route path="/browse" element={<Browse />} />
+              <Route path="/view-profile" element={<UserProfile />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+              <Route path="/*" element={<Home />} />
+            </>
+          }
         </Routes>
         <Footer />
       </BrowserRouter>
