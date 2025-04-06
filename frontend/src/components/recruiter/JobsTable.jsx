@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { FiEdit } from "react-icons/fi";
+import { FiUsers } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import useGetAllRecruiterJob from "../../hooks/useGetAllRecruiterJob";
 
@@ -40,11 +41,11 @@ const JobsTable = () => {
                {
                 filterJob?.length > 0 ? filterJob.map((item) => {
                     return(
-                        <tr key={item._id} className="border-b border-slate-200 opacity-70">
+                        <tr key={item._id} className=" relative border-b border-slate-200 opacity-70">
                             <td className="p-2">{item?.company?.companyName}</td>
                             <td className="p-2">{item.title}</td>
                             <td className="p-2">{item.createdAt.split("T")[0]}</td>
-                            <td className="p-2 flex items-center justify-end h-full text-[20px]" onClick={() => navigate(`/recruiter/companies/${item._id}`)}><FiEdit /></td>
+                            <td className="cursor-pointer p-2 flex items-center justify-end pt-3" onClick={() => navigate(`/recruiter/jobs/${item._id}/applicants`)}><FiUsers /></td>
                         </tr>
                     )
                 }): <tr><td colSpan="4" className="p-4 text-center">Job is not posted yet.</td></tr>

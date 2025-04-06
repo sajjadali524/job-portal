@@ -1,10 +1,9 @@
-import React, { useEffect } from "react";
+import React from "react";
 import google from "../assets/google.png";
+import { useNavigate } from "react-router-dom";
 
 const JobCard = ({job}) => {
-  useEffect(() => {
-    console.log(job)
-  });
+  const navigate = useNavigate();
   
   return (
     <div className="w-full p-5 shadow-lg space-y-3 rounded-md border border-slate-100 h-fit">
@@ -27,7 +26,7 @@ const JobCard = ({job}) => {
 
       <div className="flex items-center justify-between pt-3 gap-24">
         <h1 className="text-md font-semibold">{job?.salary}K</h1>
-        <button className="font-medium bg-green-600 px-3 py-1 rounded-sm text-white cursor-pointer">
+        <button onClick={() => navigate(`/job/description/${job._id}`)} className="font-medium bg-green-600 px-3 py-1 rounded-sm text-white cursor-pointer">
           Detail
         </button>
       </div>
