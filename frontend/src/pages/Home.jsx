@@ -3,8 +3,10 @@ import back_image from "../assets/background/background-1.jpg";
 import JobCard from "../components/JobCard";
 import HomeHeroSearchAndCategory from "../components/HomeHeroSearchAndCategory";
 import { useSelector } from "react-redux";
+import useGetAllJobs from "../hooks/useGetAllJobs";
 
 const Home = () => {
+  useGetAllJobs();
   const { allJobs } = useSelector(store => store.job);
 
   return (

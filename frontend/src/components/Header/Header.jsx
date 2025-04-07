@@ -77,10 +77,10 @@ const Header = () => {
         </div>
 
         <div className="flex flex-col px-5 space-y-2">
-          <div className="flex items-center gap-3">
+          {user?.role === "recruiter" ? null :<div className="flex items-center gap-3">
             <CgProfile />
             <Link to="/view-profile" className="font-medium text-[15px]">View Profile</Link>
-          </div>
+          </div> }
 
           <div className="flex items-center gap-3">
             <TbLogout />

@@ -11,7 +11,6 @@ const useGetAllAppliedJobs = () => {
         const fetchAppliedJobs = async () => {
             try {
                 const response = await axios.get(`${APPLICATION_API_END_POINT}/get-applied-jobs`, { withCredentials: true});
-                console.log(response.data.application)
                 dispatch(setAllAppliedJobs(response.data.application))
             } catch (error) {
                 console.log(error)

@@ -20,7 +20,7 @@ const CompaniesTable = () => {
     }, [companies, searchCompanyByText]);
 
   return (
-    <table className="w-full border border-slate-200 rounded-md opacity-70">
+    <table className={`w-full text-left border border-slate-200 rounded-md opacity-70 ${window.screen.width < 500 && "min-w-max"}`}>
             <thead>
                 <tr className="border-b border-slate-200">
                     {

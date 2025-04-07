@@ -1,29 +1,35 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setLoading } from "../../store/slices/authSlice";
 import { setSingleCompany } from "../../store/slices/companySlice";
 import { COMPANY_API_END_POINT } from "../../utils/constant";
-import {toast} from "react-toastify";
+import { toast } from "react-toastify";
+import Loader from "../../components/Loader";
 
 const CreateCompany = () => {
     const [companyName, setCompanyName] = useState("");
+    const { loading } = useSelector(store => store.auth)
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
     const registerCompany = async (e) => {
         e.preventDefault();
         try {
+            dispatch(setLoading(true))
             const response = await axios.post(`${COMPANY_API_END_POINT}/register`, {companyName}, {withCredentials: true});
             if(response?.data?.company) {
                 dispatch(setSingleCompany(response.data.company));
                 toast.success(response.data.message)
                 const companyId = response?.data?.company?._id;
-                console.log(companyId)
                 navigate(`/recruiter/companies/${companyId}`)
             }
         } catch (error) {
             toast.error(error.response.data.message)
+            
+        } finally {
+            dispatch(setLoading(false))
         }
     };
 
@@ -41,7 +47,7 @@ const CreateCompany = () => {
 
             <div className="space-x-3">
                 <button className="px-3 py-2 rounded-md font-medium text-black border border-slate-200 cursor-pointer hover:bg-gray-100" onClick={() => navigate("/recruiter/companies")}>Cancel</button>
-                <button className="px-3 py-2 rounded-md font-medium bg-purple-500 hover:bg-purple-400 text-white cursor-pointer" onClick={registerCompany}>Continue</button>
+                <button className="px-3 py-2 rounded-md font-medium bg-purple-500 hover:bg-purple-400 text-white cursor-pointer" onClick={registerCompany}>{loading ? <Loader /> : "Continue"}</button>
             </div>
         </div>
     </div>

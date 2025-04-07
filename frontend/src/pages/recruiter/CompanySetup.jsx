@@ -3,7 +3,10 @@ import { FaArrowLeftLong } from "react-icons/fa6";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { COMPANY_API_END_POINT } from "../../utils/constant";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { setLoading } from "../../store/slices/authSlice";
+import { toast } from "react-toastify";
+import Loader from "../../components/Loader";
 
 const CompanySetup = () => {
   const [inputData, setInputData] = useState({
@@ -16,6 +19,8 @@ const CompanySetup = () => {
   const {id} = useParams();
   const navigate = useNavigate();
   const { singleCompany } = useSelector(store => store.company);
+  const { loading } = useSelector(store => store.auth);
+  const dispatch = useDispatch();
 
 
   const handleInput = (e) => {
@@ -34,7 +39,8 @@ const CompanySetup = () => {
     });
 
     try {
-      const response = await axios.put(`${COMPANY_API_END_POINT}/update/company/${id}`, formData, {
+        dispatch(setLoading(true))
+        const response = await axios.put(`${COMPANY_API_END_POINT}/update/company/${id}`, formData, {
         withCredentials: true,
         headers: {
           "Content-Type": "multipart/form-data"
@@ -42,18 +48,23 @@ const CompanySetup = () => {
       });
 
       if(response.data.company) {
-        navigate("/recruiter/companies")
+        toast.success(response.data.message)
+        navigate("/recruiter/companies");
       };
 
     } catch (error) {
+      toast.error(error.response.data.message)
       console.log(error)
+
+    } finally {
+      dispatch(setLoading(false))
     }
   };
 
   useEffect(() => {
     if(singleCompany) {
       setInputData({
-        name: singleCompany.name || "",
+        name: singleCompany.companyName || "",
         description: singleCompany.description || "",
         website: singleCompany.website || "",
         location: singleCompany.location || "",
@@ -92,11 +103,11 @@ const CompanySetup = () => {
               </div>
               <div className="flex flex-col">
                 <label className="font-medium">Logo</label>
-                <input type="file" name="logo" className="outline-none border border-slate-200 px-3 py-1 rounded-md" onChange={handleFile} />
+                <input type="file" name="logo" value={inputData.logo} className="outline-none border border-slate-200 px-3 py-1 rounded-md" onChange={handleFile} />
               </div>
             </div>
 
-            <button className="py-2 bg-purple-500 hover:bg-purple-600 text-white font-medium w-full rounded-md mt-5 cursor-pointer">Update</button>
+            <button className="py-2 bg-purple-500 hover:bg-purple-600 text-white font-medium w-full rounded-md mt-5 cursor-pointer">{loading ? <Loader /> : "Update"}</button>
           </form>
       </div>
     </div>

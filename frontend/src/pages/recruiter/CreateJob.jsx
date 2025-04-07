@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { FaArrowLeftLong } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { JOB_API_END_POINT } from "../../utils/constant";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { postJobFields } from "../../constants/createJobFields";
 import { toast } from "react-toastify";
+import { setLoading } from "../../store/slices/authSlice";
+import Loader from "../../components/Loader";
 
 const CreateJob = () => {
   const [inputData, setInputData] = useState({
@@ -22,6 +23,8 @@ const CreateJob = () => {
 
   const navigate = useNavigate();
   const { companies } = useSelector(store => store.company);
+  const { loading } = useSelector(store => store.auth);
+  const dispatch = useDispatch();
 
   const handleInput = (e) => {
     setInputData({...inputData, [e.target.name]: e.target.value})
@@ -29,15 +32,19 @@ const CreateJob = () => {
 
   const postJob = async (e) => {
     e.preventDefault();
-    console.log(inputData)
     try {
+        dispatch(setLoading(true))
         const response = await axios.post(`${JOB_API_END_POINT}/create`, inputData, {withCredentials: true})
         if(response.data.job) {
           toast.success(response.data.message)
           navigate("/recruiter/jobs")
         }
     } catch (error) {
+      toast.error(error.response.data.message)
       console.log(error)
+
+    } finally {
+      dispatch(setLoading(false))
     }
   };
 
@@ -69,7 +76,7 @@ const CreateJob = () => {
               </select>
             </div>
 
-            <button className="py-2 bg-purple-500 hover:bg-purple-600 text-white font-medium w-full rounded-md mt-5 cursor-pointer">Post a Job</button>
+            <button className="py-2 bg-purple-500 hover:bg-purple-600 text-white font-medium w-full rounded-md mt-5 cursor-pointer">{loading ? <Loader /> : "Post a Job"}</button>
           </form>
       </div>
     </div>

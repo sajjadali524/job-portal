@@ -100,7 +100,7 @@ export const updateAccountProfile = async (req, res) => {
 
         const result = await new Promise((resolve, reject) => {
             const stream = cloudinary.uploader.upload_stream(
-                { folder: "jobPortal/resumes", resource_type: "auto",},
+                { folder: "jobPortal/resumes" },
                 (error, result) => {
                     if(error) {
                         reject(new error("resume upload failed"))
