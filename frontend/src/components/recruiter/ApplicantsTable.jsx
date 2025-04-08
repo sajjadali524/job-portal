@@ -6,23 +6,22 @@ import { APPLICATION_API_END_POINT } from "../../utils/constant";
 
 const ApplicantsTable = () => {
     const tableHead = ["Full Name", "Email", "Contact", "Resume", "Date", "Action"];
-    const [status, setStatus] = useState("");
+    const [status, setStatus] = useState("Pending");
     const { applicants } = useSelector(store => store.applicant);
 
-    const statusUpdate = async(e, id) => {
+    const statusUpdate = async (e, id) => {
         e.preventDefault();
-        console.log(id)
         try {
-            const response = await axios.patch(`${APPLICATION_API_END_POINT}/update-status/${id}`, {status}, {withCredentials: true});
-            console.log(response.data)
+            const response = await axios.patch(`${APPLICATION_API_END_POINT}/update-status/${id}`, {status: e.target.value}, {withCredentials: true});
+            setStatus(response.data.application.status)
         } catch (error) {
             console.log(error)
         }
     };
 
   return (
-    <div className="overflow-x-auto">
-        <table className={`w-full text-left border border-slate-200 rounded-md opacity-70 ${window.screen.width < 500 && "min-w-[250%]"}`}>
+    <div className="w-full overflow-x-auto">
+        <table className={`w-full text-left border border-slate-200 rounded-md opacity-70 min-w-[800px]`}>
             <thead>
                 <tr className="border-b border-slate-200">
                     {
@@ -48,8 +47,8 @@ const ApplicantsTable = () => {
                             }
                             <td className="p-2">{item?.createdAt.split("T")[0]}</td>
                             <td className="flex items-center justify-end p-2 pt-3">
-                                <select className="outline-none" value={item?.status}  name="status" onClick={(e) => statusUpdate(e, item?._id)} onChange={(e) => setStatus(e.target.value)} disabled={item?.status === "Rejected" || item?.status === "Accepted"}>
-                                    <option value="">{item?.staus === "Pending" ? "Pending" : item?.status }</option>
+                                <select className="outline-none" value={item?.status}  name="status" onChange={(e) => {setStatus(e.target.value); statusUpdate(e, item?._id)}} disabled={item?.status === "Rejected" || item?.status === "Accepted"}>
+                                    <option value="">{item?.staus === "Pending" ? "Pending" : status }</option>
                                     <option value="Rejected">Rejected</option>
                                     <option value="Accepted">Accepted</option>
                                 </select>

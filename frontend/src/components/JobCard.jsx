@@ -5,7 +5,7 @@ const JobCard = ({job}) => {
   const navigate = useNavigate();
   
   return (
-    <div className="w-full p-5 shadow-lg space-y-3 rounded-md border border-slate-100 h-fit">
+    <div className="w-full p-5 shadow-lg space-y-5 rounded-md border border-slate-100">
       <div className="flex items-center gap-5">
         <div className="w-12 h-12 flex items-center justify-center bg-gray-100 rounded-full">
           <img src={job?.company?.logo} alt="logo" className="w-8 h-8 rounded-full" />
@@ -16,7 +16,7 @@ const JobCard = ({job}) => {
         </div>
       </div>
 
-      <div className="space-y-2">
+      <div className="space-y-3">
         <h1 className="text-md font-semibold">{job?.title}</h1>
         <span className="text-green-500 font-semibold text-sm bg-green-100 p-1 px-2">{job?.jobType}</span>
       </div>

@@ -40,9 +40,9 @@ const Jobs = () => {
   }, [allJobs, searchedQuery]);
   
   return (
-    <div className="lg:flex block space-y-10 space-x-5 lg:px-20 md:px-10 px-3 lg:pt-10 pt-5">
+    <div className="lg:flex block space-x-5 lg:px-20 md:px-10 px-3 lg:mt-10 mt-5">
       <FilterJobsCategory />
-      <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5">
+      <div className="grid lg:grid-cols-2 md:grid-cols-2 grid-cols-1 gap-5 lg:mt-0 mt-5">
         {
           filterJobs?.length <= 0 ? <span>No jobs available</span> : filterJobs?.map((job) => <JobCard key={job._id} job={job} />)
         }

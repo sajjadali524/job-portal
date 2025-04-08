@@ -34,7 +34,7 @@ const CreateCompany = () => {
     };
 
   return (
-    <div className="flex items-center justify-center w-full pt-16">
+    <div className="flex items-center justify-center w-full pt-16 lg:px-20 md:px-10 px-3">
         <div className="lg:w-2/4 space-y-10">
             <div className="">
                 <h1 className="font-semibold text-[28px]">Your Company Name</h1>

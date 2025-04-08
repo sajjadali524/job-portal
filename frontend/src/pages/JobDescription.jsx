@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 const JobDescription = () => {
     const { singleJob } = useSelector(store => store.job);
     const { user } = useSelector(store => store.auth);
-    const isInitiallyApplied = singleJob?.applications?.some(application=> application.applicant === user?.id) || false
+    const isInitiallyApplied = singleJob?.applications?.some(application => application.applicant === user?._id) || false
     const [isApplied, setIsApplied] = useState(isInitiallyApplied);
     const dispatch = useDispatch();
     const { id } = useParams();
@@ -36,14 +36,14 @@ const JobDescription = () => {
                 const response = await axios.get(`${JOB_API_END_POINT}/get-job-by-id/${id}`, { withCredentials: true });
                 if (response.data.job) {
                     dispatch(setSingleJob(response.data.job));
-                    setIsApplied(response.data.job.applications.some(application=> application.applicant === user?.id))
+                    setIsApplied(response.data.job.applications.some(application => application.applicant === user?._id))
                 }
             } catch (error) {
                 console.log(error);
             }
         };
         fetchSingleJob();
-    }, [id, dispatch, user?.id]);
+    }, [id, dispatch, user?._id]);
 
     const formattedDescription = singleJob?.description.split(/[.:)]+/);
 

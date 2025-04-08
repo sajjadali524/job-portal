@@ -20,7 +20,7 @@ const Home = () => {
 
         <div className="relative flex flex-col items-center justify-center z-10 text-center text-white space-y-2 w-full">
           <h1 className="font-semibold lg:text-[40px] md:text-[35px] text-[25px]">
-            <span className="text-green-500">2,568</span> job available
+            <span className="text-green-500">{allJobs?.length}</span> job available
           </h1>
           <h1 className="font-semibold lg:text-[40px] md:text-[35px] text-[23px]">
             You can choose your dream job

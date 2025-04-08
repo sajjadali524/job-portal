@@ -11,12 +11,12 @@ const Browse = () => {
 
   useEffect(() => {
     dispatch(setSearchedQuery(""))
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className=" lg:px-20 md:px-10 px-3 mt-10 space-y-5">
       <h1 className="font-medium">All Jobs <span className="font-semibold">{`(${allJobs?.length})`}</span></h1>
-      <div className="grid lg:grid-cols-3 md:grid-cos-2 grid-cols-1 gap-5">
+      <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-5">
         {
           allJobs?.length <= 0 ? <span>No jobs available</span> : allJobs?.map((job) => <JobCard key={job._id} job={job} />)
         }

@@ -101,7 +101,7 @@ export const updateStatus = async (req, res) => {
         application.status = status;
         await application.save();
 
-        return res.status(200).json({message: "Status changes successfully!"});
+        return res.status(200).json({message: "Status changes successfully!", application});
 
     } catch (error) {
         return res.status(500).json({message: "Internal server error"})

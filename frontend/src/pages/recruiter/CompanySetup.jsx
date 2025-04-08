@@ -73,8 +73,8 @@ const CompanySetup = () => {
   }, [singleCompany]);
 
   return (
-    <div className="flex items-center justify-center w-full pt-16">
-      <div className="w-1/2 shadow-xl p-5">
+    <div className="flex items-center justify-center w-full lg:pt-16 md:pt-16 pt-10 px-3">
+      <div className="lg:w-1/2 md:w-2/3 w-full shadow-xl p-5">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3 cursor-pointer opacity-70" onClick={() => navigate("/recruiter/companies/create")}>
             <FaArrowLeftLong />
@@ -84,7 +84,7 @@ const CompanySetup = () => {
           </div>
 
           <form className="pt-8 opacity-80" onSubmit={updateCompany}>
-            <div className="grid grid-cols-2 gap-5">
+            <div className="grid lg:grid-cols-2 md:grid-cols-2 grid-cols-1 gap-5">
               <div className="flex flex-col">
                 <label className="font-medium">Company Name</label>
                 <input type="text" name="name" value={inputData.name} className="outline-none border border-slate-200 px-3 py-1 rounded-md" disabled onChange={handleInput} />
@@ -103,7 +103,7 @@ const CompanySetup = () => {
               </div>
               <div className="flex flex-col">
                 <label className="font-medium">Logo</label>
-                <input type="file" name="logo" value={inputData.logo} className="outline-none border border-slate-200 px-3 py-1 rounded-md" onChange={handleFile} />
+                <input type="file" name="logo" className="outline-none border border-slate-200 px-3 py-1 rounded-md" onChange={handleFile} />
               </div>
             </div>
 

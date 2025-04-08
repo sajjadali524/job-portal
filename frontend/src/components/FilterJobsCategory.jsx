@@ -5,15 +5,26 @@ import { setSearchedQuery } from "../store/slices/jobSlice";
 
 const FilterJobsCategory = () => {
   const [query, setQuery] = useState("");
+  const [screenSize, setScreenSize] = useState(window.screen.width < 768)
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(setSearchedQuery(query))
-    
-  }, [query])
+    const handleResize = () => {
+      setScreenSize(window.screen.width < 768 && window.screen.width > 400);
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize)
+  }, []);
+
+  useEffect(() => {
+    dispatch(setSearchedQuery(query));
+  }, [query, dispatch, screenSize]);
+
+  const gridGlass = screenSize ? "grid-cols-2": "grid-cols-1";
 
   return (
-    <div className="lg:block flex flex-wrap lg:space-y-5 space-y-8 lg:w-1/5 w-full lg:py-0 py-5 lg:h-screen shadow-md px-3 lg:space-x-0 md:space-x-10 space-x-5">
+    <div className={`grid lg:grid-cols-1 md:grid-cols-4 grid-cols-1 py-5 space-y-5 lg:w-2/6 w-full shadow-md px-3 ${gridGlass}`}>
       <h1 className="py-3 border-b border-slate-200 font-bold opacity-70">Filter Job</h1>
       {filterJobCategoryForm.map((item, index) => {
         return (

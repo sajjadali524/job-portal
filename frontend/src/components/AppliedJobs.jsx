@@ -27,7 +27,7 @@ const AppliedJobs = () => {
         </thead>
 
         <tbody>
-          {allAppliedJobs ? allAppliedJobs.map((job, index) => {
+          {allAppliedJobs?.length > 0 ? allAppliedJobs.map((job, index) => {
             return (
               <tr
                 key={index}
@@ -51,7 +51,7 @@ const AppliedJobs = () => {
                 </td>
               </tr>
             );
-          }) : <p>Job not applied yet.</p>}
+          }) : <tr><td colSpan={4} className="opacity-50 text-center py-3">No job applied yet.</td></tr>}
         </tbody>
       </table>
     </div>

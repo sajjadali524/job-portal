@@ -49,10 +49,10 @@ const CreateJob = () => {
   };
 
   return (
-    <div className="flex items-center justify-center w-full pt-16">
-      <div className="w-1/2 shadow-xl p-5">
+    <div className="flex items-center justify-center w-full lg:pt-16 md:pt-16 pt-0">
+      <div className="lg:w-1/2 md:w-2/3 w-full shadow-xl p-5">
           <form className="pt-8 opacity-80" onSubmit={postJob}>
-            <div className="grid grid-cols-2 gap-5">
+            <div className="grid lg:grid-cols-2 md:grid-cols-2 grid-cols-1 gap-5">
               {
                 postJobFields.map((item, index) => {
                     return(
