@@ -14,7 +14,7 @@ const app = express();
 //middlewares
 app.use(express.json());
 app.use(cors({
-    origin: ["http://localhost:5173"],
+    origin: ["https://job-portal-frontend-cgtk.onrender.com"],
     credentials: true
 }));
 app.use(cookieParser());
