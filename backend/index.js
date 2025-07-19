@@ -12,11 +12,13 @@ dotenv.config();
 const app = express();
 
 //middlewares
-app.use(express.json());
 app.use(cors({
-    origin: ["http://localhost:5173"],
+    origin: "https://job-portal-bp25.vercel.app/",
     credentials: true
 }));
+app.options("*", cors());
+
+app.use(express.json());
 app.use(cookieParser());
 
 // apis
