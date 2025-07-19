@@ -4,7 +4,7 @@ import { AiOutlineMail } from "react-icons/ai";
 import { BsTelephone } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import AppliedJobs from "../components/AppliedJobs";
-import UpdateProfile from "../components/updateProfile";
+import UpdateProfile from "../components/UpdateProfile";
 import { useSelector } from "react-redux";
 
 const UserProfile = () => {
