@@ -13,7 +13,7 @@ const app = express();
 
 //middlewares
 app.use(cors({
-    origin: "https://job-portal-bp25.vercel.app/",
+    origin: "https://job-portal-phi-navy.vercel.app",
     credentials: true
 }));
 app.options("*", cors());
