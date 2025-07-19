@@ -4,7 +4,7 @@ import { AiOutlineMail } from "react-icons/ai";
 import { BsTelephone } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import AppliedJobs from "../components/AppliedJobs";
-import UpdateProfile from "../components/UpdateProfile";
+// import UpdateProfile from "../components/UpdateProfile";
 import { useSelector } from "react-redux";
 
 const UserProfile = () => {
@@ -16,7 +16,7 @@ const UserProfile = () => {
       {isFormOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-[rgba(0,0,0,0.7)] bg-opacity-50 z-50">
           <div className="bg-white rounded-lg shadow-lg p-5 w-[90%] max-w-lg">
-            <UpdateProfile setIsFormOpen={setIsFormOpen} />
+            {/* <UpdateProfile setIsFormOpen={setIsFormOpen} /> */}
           </div>
         </div>
       )}
